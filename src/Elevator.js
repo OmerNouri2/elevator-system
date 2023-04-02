@@ -6,6 +6,7 @@ const Elevator = ({ elevatorNumber, currentFloor, destinations, onFloorReached }
   const [currentDestination, setCurrentDestination] = useState(null);
   const [buttonColor, setButtonColor] = useState('black');
   const [isOccupied, setIsOccupied] = useState(false);
+  
  
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -63,6 +64,20 @@ const Elevator = ({ elevatorNumber, currentFloor, destinations, onFloorReached }
   useEffect(() => {
     setCurrentDestination(destinations[0]);
   }, [destinations]);
+
+  useEffect(() => {
+    if (currentDestination !== null && currentDestination !== currentFloor) {
+      // Move the elevator toward the destination floor
+      const timeoutId = setTimeout(() => {
+        if (currentDirection === 'up') {
+          onFloorReached(currentDestination);
+        } else {
+          onFloorReached(currentDestination);
+        }
+      }, 1000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [currentDestination, currentFloor, currentDirection, onFloorReached]);
 
   return (
     <div className="elevator">

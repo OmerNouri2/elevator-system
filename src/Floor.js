@@ -17,9 +17,9 @@ const Floor = ({ floorNumber, onCallElevator }) => {
         setButtonText('Call');
         setButtonColor('green');
       }, 2000);
-      // play a sound when the elevator reaches the floor
-      const sound = new Audio("path/to/sound.mp3");
-      sound.play();
+      // // play a sound when the elevator reaches the floor
+      // const sound = new Audio("path/to/sound.mp3");
+      // sound.play();
     };
     
   
