@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Floor from './Floor';
 import Elevator from './Elevator';
-import QueueManager from './QueueManager';
+// import QueueManager from './QueueManager';
 /*
-    Here, we have implemented the main logic for the elevator system. 
-    The component uses React hooks to manage the state of the elevators, their destinations, 
+    The main logic for the elevator system. 
+    Manage the state of the elevators, their destinations, 
     and the queues of people waiting to go up or down. 
     The component also renders the floors and elevators using the Floor and Elevator components, respectively.
 */
@@ -104,6 +104,7 @@ const ElevatorSystem = ({ numFloors, numElevators }) => {
       const floor = elevator.destinations[0];
       elevator.currentFloor = floor;
       elevator.destinations.shift();
+      elevator.isOccupied = false;
       return newData;
     });
   };
@@ -135,12 +136,12 @@ const ElevatorSystem = ({ numFloors, numElevators }) => {
         <div className="elevator-system">
             <div className="floors">{floors}</div>
             <div className="elevators">{elevators}</div>
-            <QueueManager
+            {/* <QueueManager
                 numFloors={numFloors}
                 upQueue={upQueue}
                 downQueue={downQueue}
                 onQueueChange={handleQueueChange}
-            />
+            /> */}
         </div>
         );
     };

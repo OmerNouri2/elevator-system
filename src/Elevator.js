@@ -1,40 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import ElevatorButton from './ElevatorButton';
+import { ReactComponent as ElevatorIcon } from './elevator-icon.svg';
 
-const Elevator = ({ elevatorNumber, destinations, onFloorReached }) => {
+const Elevator = ({ elevatorNumber, currentFloor, destinations, onFloorReached }) => {
   const [currentDirection, setCurrentDirection] = useState('none');
   const [currentDestination, setCurrentDestination] = useState(null);
-  const [buttonText, setButtonText] = useState('Idle');
   const [buttonColor, setButtonColor] = useState('black');
   const [isOccupied, setIsOccupied] = useState(false);
-  const [currentFloor, setCurrentFloor] = useState(1);
-
-
+ 
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (destinations.length === 0) {
         setCurrentDirection('none');
         setCurrentDestination(null);
-        setButtonText('Idle');
-        setButtonColor('green');
+        setButtonColor('black');
         setIsOccupied(false);
       } else {
         const nextFloor = destinations[0];
         if (nextFloor > currentFloor) {
           setCurrentDirection('up');
-          setButtonText('Occupied');
           setButtonColor('red');
           setIsOccupied(true);
           destinations.sort((a, b) => a - b);
         } else if (nextFloor < currentFloor) {
           setCurrentDirection('down');
-          setButtonText('Occupied');
           setButtonColor('red');
           setIsOccupied(true);
           destinations.sort((a, b) => b - a);
         } else {
           if (nextFloor === currentFloor) {
             destinations.shift();
+            setCurrentDestination(null);
+            setButtonColor('green');
             onFloorReached();
           }
           destinations.shift();
@@ -42,7 +38,6 @@ const Elevator = ({ elevatorNumber, destinations, onFloorReached }) => {
           setCurrentDirection('none');
           setCurrentDestination(null);
           setIsOccupied(false);
-          setButtonText("Idle");
           setButtonColor("green");
         }
       }
@@ -60,33 +55,10 @@ const Elevator = ({ elevatorNumber, destinations, onFloorReached }) => {
         // If the current floor is above the destination floor and the elevator is not already going down
         setCurrentDirection('down');
       }
-      setButtonText(currentDestination.toString());
+      // setButtonText(currentDestination.toString());
       setButtonColor('red');
     }
   }, [currentDestination, currentFloor, currentDirection, isOccupied]);
-
-  const handleClick = () => {
-    if (destinations.length === 0 || isOccupied || destinations[0] === currentFloor) {
-      return;
-    }
-  
-    const nextDestination = destinations[0];
-    if (nextDestination === currentFloor) {
-        destinations.shift();
-        onFloorReached();
-        setCurrentDirection('none');
-        setCurrentDestination(null);
-        setIsOccupied(false);
-        setButtonText("Idle");
-        setButtonColor("green");
-        setCurrentFloor(nextDestination); // Update the current floor
-        return;
-      }
-    destinations.push(nextDestination);
-    setCurrentDestination(nextDestination);
-    setIsOccupied(true);
-    setCurrentFloor(currentFloor + (currentDirection === 'up' ? 1 : -1));
-  };
 
   useEffect(() => {
     setCurrentDestination(destinations[0]);
@@ -98,7 +70,7 @@ const Elevator = ({ elevatorNumber, destinations, onFloorReached }) => {
       <p>Current floor: {currentFloor}</p>
       <p>Destinations: {destinations.join(', ')}</p>
       <p>Direction: {currentDirection}</p>
-      <ElevatorButton buttonText={buttonText} buttonColor={buttonColor} onClick={handleClick} />
+      <ElevatorIcon color={buttonColor}  />
     </div>
   );
 };
