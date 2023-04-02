@@ -167,7 +167,6 @@ const ElevatorSystem = () => {
   const [requests, setRequests] = useState([]);
   
   const handleCallElevator = (floorNumber) => {
-    console.log("handleCallElevator")
     setRequests((prevState) => {
       const newRequests = [...prevState, floorNumber];
       const sortedRequests = newRequests.sort((a, b) => a - b);
@@ -205,7 +204,6 @@ const ElevatorSystem = () => {
   };
   
   const handleFloorReached = (elevatorIndex) => {
-    console.log("handleCallElevator")
     const updatedElevators = [...elevators];
     updatedElevators[elevatorIndex].currentFloor =
       updatedElevators[elevatorIndex].destinations[0];

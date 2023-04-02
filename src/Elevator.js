@@ -16,19 +16,14 @@ const Elevator = ({ elevatorNumber, currentFloor, destinations, onFloorReached }
         setButtonColor('black');
         setIsOccupied(false);
       } else {
-        console.log("destinations.length != 0");
         const nextFloor = destinations[0];
-        console.log("nextFloor");
-        console.log(nextFloor);
         if (nextFloor > currentFloor) {
-          console.log("nextFloor > currentFloor");
           setCurrentDirection('up');
           setButtonColor('red');
           setIsOccupied(true);
           destinations.sort((a, b) => a - b);
           onFloorReached(elevatorNumber);
         } else if (nextFloor < currentFloor) {
-          console.log("nextFloor < currentFloor");
           setCurrentDirection('down');
           setButtonColor('red');
           setIsOccupied(true);
@@ -36,8 +31,6 @@ const Elevator = ({ elevatorNumber, currentFloor, destinations, onFloorReached }
           onFloorReached(elevatorNumber);
         } else {
           destinations.shift();
-          console.log("elevatorNumber");
-          console.log(elevatorNumber);
           onFloorReached(elevatorNumber);
           setCurrentDirection('none');
           setCurrentDestination(null);
